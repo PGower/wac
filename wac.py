@@ -495,6 +495,8 @@ class Client(threading.local, object):
             kwargs['auth'] = self.config.auth
         if self.config.timeout is not None:
             kwargs['timeout'] = self.config.timeout
+        if self.config.cert:
+            kwargs['cert'] = self.config.cert
 
         url = self.config.root_url + uri
 
