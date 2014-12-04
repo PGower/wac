@@ -169,6 +169,7 @@ class Config(object):
                  keep_alive=False,
                  timeout=None,
                  cert=None,
+                 verify=None,
                  ):
         self.reset(
             root_url,
@@ -181,7 +182,8 @@ class Config(object):
             error_cls=error_cls,
             keep_alive=keep_alive,
             timeout=timeout,
-            cert=None
+            cert=None,
+            verify=None,
             )
 
     def reset(self,
@@ -196,6 +198,7 @@ class Config(object):
               keep_alive=False,
               timeout=None,
               cert=None,
+              verify=None,
               ):
         headers = headers or {}
         self.root_url = root_url.rstrip('/') if root_url else None
@@ -211,6 +214,7 @@ class Config(object):
         self.keep_alive = keep_alive
         self.timeout = timeout
         self.cert = cert
+        self.verify = verify
         if echo:
             self.before_request.append(Config._echo_request)
             self.after_request.append(Config._echo_response)
@@ -501,6 +505,8 @@ class Client(threading.local, object):
             kwargs['timeout'] = self.config.timeout
         if self.config.cert:
             kwargs['cert'] = self.config.cert
+        if self.config.verify is not None:
+            kwargs['verify'] = self.config.verify
 
         url = self.config.root_url + uri
 
