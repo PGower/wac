@@ -168,6 +168,7 @@ class Config(object):
                  error_cls=None,
                  keep_alive=False,
                  timeout=None,
+                 cert=None,
                  ):
         self.reset(
             root_url,
@@ -180,6 +181,7 @@ class Config(object):
             error_cls=error_cls,
             keep_alive=keep_alive,
             timeout=timeout,
+            cert=None
             )
 
     def reset(self,
@@ -193,6 +195,7 @@ class Config(object):
               error_cls=None,
               keep_alive=False,
               timeout=None,
+              cert=None,
               ):
         headers = headers or {}
         self.root_url = root_url.rstrip('/') if root_url else None
@@ -207,6 +210,7 @@ class Config(object):
         self.after_request = []
         self.keep_alive = keep_alive
         self.timeout = timeout
+        self.cert = cert
         if echo:
             self.before_request.append(Config._echo_request)
             self.after_request.append(Config._echo_response)
